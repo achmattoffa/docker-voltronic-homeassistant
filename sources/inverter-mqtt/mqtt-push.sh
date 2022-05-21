@@ -28,6 +28,8 @@ echo 'curl --request POST \
 
 INVERTER_DATA=`timeout 10 /opt/inverter-cli/bin/inverter_poller -1`
 
+echo $INVERTER_DATA
+
 #####################################################################################
 
 Inverter_mode=`echo $INVERTER_DATA | jq '.Inverter_mode' -r`
