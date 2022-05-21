@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  voltronic-mqtt:
+  axpert-influx:
 
     # We're now (finally) supporting Multi-Arch builds (via Github actions) on Docker Hub!
     #image: bushrangers/ha-voltronic-mqtt
@@ -12,7 +12,7 @@ services:
       dockerfile: Dockerfile.dev
 
 
-    container_name: voltronic-mqtt
+    container_name: axpert-influx
 
     privileged: true
     restart: always
