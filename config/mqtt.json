@@ -1,12 +1,11 @@
 {
     "influx": {
-        "enabled": "false",
         "host": "http://[INFLUX_IP_OR_URL]:8086", 
-        "username": "", 
-        "password": "", 
-        "device": "voltronic", 
-        "prefix": "solar",
-        "database": "solar", 
+        "org": "", 
+        "bucket": "", 
+        "token": "",
+        "prefix": "inverters",
+        "device": "axpert", 
         "namingMap": {
             "Inverter_mode": "output_mode",
             "AC_grid_voltage":  "grid_voltage",

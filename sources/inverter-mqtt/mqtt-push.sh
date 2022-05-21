@@ -2,14 +2,21 @@
 
 pushInfluxData () {
     INFLUX_HOST=`cat /etc/inverter/mqtt.json | jq '.influx.host' -r`
-    INFLUX_USERNAME=`cat /etc/inverter/mqtt.json | jq '.influx.username' -r`
-    INFLUX_PASSWORD=`cat /etc/inverter/mqtt.json | jq '.influx.password' -r`
-    INFLUX_DEVICE=`cat /etc/inverter/mqtt.json | jq '.influx.device' -r`
+    INFLUX_ORG=`cat /etc/inverter/mqtt.json | jq '.influx.org' -r`
+    INFLUX_BUCKET=`cat /etc/inverter/mqtt.json | jq '.influx.bucket' -r`
+    INFLUX_TOKEN=`cat /etc/inverter/mqtt.json | jq '.influx.token' -r`
     INFLUX_PREFIX=`cat /etc/inverter/mqtt.json | jq '.influx.prefix' -r`
-    INFLUX_DATABASE=`cat /etc/inverter/mqtt.json | jq '.influx.database' -r`
+    INFLUX_DEVICE=`cat /etc/inverter/mqtt.json | jq '.influx.device' -r`
     INFLUX_MEASUREMENT_NAME=`cat /etc/inverter/mqtt.json | jq '.influx.namingMap.'$1'' -r`
     
-    curl -i -XPOST "$INFLUX_HOST/write?db=$INFLUX_DATABASE&precision=s" -u "$INFLUX_USERNAME:$INFLUX_PASSWORD" --data-binary "$INFLUX_PREFIX,device=$INFLUX_DEVICE $INFLUX_MEASUREMENT_NAME=$2"
+    curl --request POST \
+"http://$INFLUX_HOST/api/v2/write?org=$INFLUX_ORG&bucket=$INFLUX_BUCKET&precision=s" \
+  --header "Authorization: Token $INFLUX_TOKEN" \
+  --header "Content-Type: text/plain; charset=utf-8" \
+  --header "Accept: application/json" \
+  --data-binary "
+    $INFLUX_PREFIX,device=$INFLUX_DEVICE $INFLUX_MEASUREMENT_NAME=$2"
+
 }
 
 INVERTER_DATA=`timeout 10 /opt/inverter-cli/bin/inverter_poller -1`
