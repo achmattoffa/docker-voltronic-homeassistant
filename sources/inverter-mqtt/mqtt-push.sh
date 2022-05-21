@@ -9,6 +9,14 @@ pushInfluxData () {
     INFLUX_DEVICE=`cat /etc/inverter/mqtt.json | jq '.influx.device' -r`
     INFLUX_MEASUREMENT_NAME=`cat /etc/inverter/mqtt.json | jq '.influx.namingMap.'$1'' -r`
     
+echo 'curl --request POST \
+"$INFLUX_HOST/api/v2/write?org=$INFLUX_ORG&bucket=$INFLUX_BUCKET&precision=s" \
+  --header "Authorization: Token $INFLUX_TOKEN" \
+  --header "Content-Type: text/plain; charset=utf-8" \
+  --header "Accept: application/json" \
+  --data-binary "$INFLUX_PREFIX,device=$INFLUX_DEVICE $INFLUX_MEASUREMENT_NAME=$2"'
+
+
     curl --request POST \
 "$INFLUX_HOST/api/v2/write?org=$INFLUX_ORG&bucket=$INFLUX_BUCKET&precision=s" \
   --header "Authorization: Token $INFLUX_TOKEN" \
