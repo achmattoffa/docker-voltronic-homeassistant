@@ -1,11 +1,11 @@
 {
     "influx": {
-        "host": "http://[INFLUX_IP_OR_URL]:8086", 
-        "org": "", 
-        "bucket": "", 
-        "token": "",
+        "host": "http://192.168.5.245:8086",
+        "org": "toffa", 
+        "bucket": "inverters",
+        "token": "roUMIK_PBM1j2tk0A6g7yB6OBE8kMiimYpOlpLDwR29uIKmBbDrdLwpDqS_GPuucII9y4QcsgvRjAW-gMOxcJA==",
         "prefix": "inverters",
-        "device": "axpert", 
+        "device": "axpert",
         "namingMap": {
             "Inverter_mode": "output_mode",
             "AC_grid_voltage":  "grid_voltage",
